@@ -1,7 +1,7 @@
 // API Configuration
 const API_CONFIG = {
   // Production API URL (your deployed backend)
-  PRODUCTION_URL: 'https://backend-shivalik.onrender.com',
+  PRODUCTION_URL: 'https://backend-shivalik-2.onrender.com',
   
   // Development API URL (local backend)
   DEVELOPMENT_URL: 'http://localhost:5000',
@@ -9,7 +9,7 @@ const API_CONFIG = {
   // Use environment variable or default to production
   BASE_URL: process.env.REACT_APP_USE_PRODUCTION === 'false' 
     ? 'http://localhost:5000' 
-    : process.env.REACT_APP_API_URL || 'https://backend-shivalik.onrender.com'
+    : process.env.REACT_APP_API_URL || 'https://backend-shivalik-2.onrender.com'
 };
 
 // API Endpoints
