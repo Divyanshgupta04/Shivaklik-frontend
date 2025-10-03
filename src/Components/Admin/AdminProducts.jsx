@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import axios from 'axios'
 import { FiPlus, FiEdit, FiTrash2, FiLogOut } from 'react-icons/fi'
+import { API_ENDPOINTS } from '../../config/api'
 
 const ProductModal = ({ show, onClose, onSubmit, title, isEdit = false, formData, setFormData }) => {
   if (!show) return null
@@ -71,7 +72,7 @@ const AdminProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/products', getAuthHeaders())
+      const res = await axios.get(API_ENDPOINTS.ADMIN_PRODUCTS, getAuthHeaders())
       if (res.data.success) setProducts(res.data.products)
     } catch (e) {
       // no-op
@@ -95,7 +96,7 @@ const AdminProducts = () => {
   const addProduct = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.post('http://localhost:5000/api/admin/products', formData, getAuthHeaders())
+      const res = await axios.post(API_ENDPOINTS.ADMIN_PRODUCTS, formData, getAuthHeaders())
       if (res.data.success) { toast.success('Product added'); setShowAddModal(false); fetchProducts() }
     } catch (e) { toast.error('Failed to add product') }
   }
@@ -103,7 +104,7 @@ const AdminProducts = () => {
   const editProduct = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.put(`http://localhost:5000/api/admin/products/${selectedProduct.id}`, formData, getAuthHeaders())
+      const res = await axios.put(`${API_ENDPOINTS.ADMIN_PRODUCTS}/${selectedProduct.id}`, formData, getAuthHeaders())
       if (res.data.success) { toast.success('Product updated'); setShowEditModal(false); setSelectedProduct(null); fetchProducts() }
     } catch (e) { toast.error('Failed to update product') }
   }
@@ -111,7 +112,7 @@ const AdminProducts = () => {
   const deleteProduct = async (id) => {
     if (!window.confirm('Delete this product?')) return
     try {
-      const res = await axios.delete(`http://localhost:5000/api/admin/products/${id}`, getAuthHeaders())
+      const res = await axios.delete(`${API_ENDPOINTS.ADMIN_PRODUCTS}/${id}`, getAuthHeaders())
       if (res.data.success) { toast.success('Product deleted'); fetchProducts() }
     } catch (e) { toast.error('Failed to delete product') }
   }

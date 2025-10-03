@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../../config/api';
 import { 
   FiPlus, FiEdit, FiTrash2, FiLogOut, FiBarChart, FiUsers, FiShoppingCart, 
   FiDollarSign, FiTrendingUp, FiPackage, FiEye, FiStar, FiActivity,
@@ -155,7 +156,7 @@ const AdminDashboard = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/products', getAuthHeaders());
+      const response = await axios.get(API_ENDPOINTS.ADMIN_PRODUCTS, getAuthHeaders());
       if (response.data.success) {
         setProducts(response.data.products);
       }
@@ -172,7 +173,7 @@ const AdminDashboard = () => {
 
   const fetchDashboardStats = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/dashboard', getAuthHeaders());
+      const response = await axios.get(`${API_ENDPOINTS.ADMIN}/dashboard`, getAuthHeaders());
       if (response.data.success) {
         setStats(response.data.stats);
       }
@@ -185,7 +186,7 @@ const AdminDashboard = () => {
   const fetchOrders = async (page = 1) => {
     try {
       // Fetch more orders for better analytics
-      const response = await axios.get(`http://localhost:5000/api/admin/orders?page=${page}&limit=50`, getAuthHeaders());
+      const response = await axios.get(`${API_ENDPOINTS.ADMIN_ORDERS}?page=${page}&limit=50`, getAuthHeaders());
       if (response.data.success) {
         setOrders(response.data.orders.slice(0, 8)); // Keep only 8 for display
         
@@ -252,7 +253,7 @@ const AdminDashboard = () => {
 
   const fetchUsers = async (page = 1) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/admin/users?page=${page}&limit=10`, getAuthHeaders());
+      const response = await axios.get(`${API_ENDPOINTS.ADMIN_USERS}?page=${page}&limit=10`, getAuthHeaders());
       if (response.data.success) {
         setUsers(response.data.users);
         setUsersPagination(response.data.pagination);
@@ -284,7 +285,7 @@ const AdminDashboard = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/admin/products',
+        API_ENDPOINTS.ADMIN_PRODUCTS,
         formData,
         getAuthHeaders()
       );
@@ -306,7 +307,7 @@ const AdminDashboard = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/admin/products/${selectedProduct.id}`,
+        `${API_ENDPOINTS.ADMIN_PRODUCTS}/${selectedProduct.id}`,
         formData,
         getAuthHeaders()
       );
@@ -328,7 +329,7 @@ const AdminDashboard = () => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
         const response = await axios.delete(
-          `http://localhost:5000/api/admin/products/${productId}`,
+          `${API_ENDPOINTS.ADMIN_PRODUCTS}/${productId}`,
           getAuthHeaders()
         );
         
